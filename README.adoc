@@ -1,0 +1,52 @@
+= Spring Boot Starter Template
+
+== Roadmap
+
+* [ ] Hexagonal architecture
+* [x] JWT logout invalidation
+* [ ] Google reCaptcha
+* [ ] Authenticator TOTP
+* [x] Multiple user roles
+* [ ] Dynamic role-permission association
+* [ ] Database based i18n
+* [ ] SMS OTP
+* [ ] Redis integration
+* [ ] Soft delete for users while retaining username uniqueness
+* [ ] TraceId
+* [ ] E-Tag implementation
+
+=== User management
+
+* [ ] Form login with password (returns a JWT).
+* [ ] Lock/Unlock users. Logout when user is locked.
+* [ ] Soft delete users. Logout when user is locked or deleted.
+* [ ] keep user disabled until email validation.
+* [ ] delete users after configured time if email is not verified.
+ - 2 implementation: redis based w/ TTL and db based with quartz job.
+* [ ] Password reset link via email and SMS
+* [ ] OTP login via Telegram
+* [ ] Magic link login
+* [ ] Logout when role or group change
+* [ ] Users have multiple `Groups`. Groups have multiple permissions.
+
+
+== Development
+
+*Example JWT*
+
+```
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJzcHJpbmctY291cnNlIiwic3ViIjoiam9obkBleGFtcGxlLmNvbSIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiaXNzIjoiYXBpIiwiZXhwIjoxNzk4MzYzOTEzLCJpYXQiOjE2OTgzNjAzMTMsImp0aSI6IjllN2UxNjhkLWM5NWEtNGRlZC05NmIxLTU5MDNiN2Q2NzJkMyJ9.84BXCBpcsB4PEI6zoLT8SMbsEIHEWuUQ5YsdwTX28bc
+```
+
+image::https://run.pstmn.io/button.svg[link="https://app.getpostman.com/run-collection/18580088-212fd2bc-10fe-4dd9-973f-89fec2c4aaa9?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D18580088-212fd2bc-10fe-4dd9-973f-89fec2c4aaa9%26entityType%3Dcollection%26workspaceId%3D72353f4f-ebc8-4442-907a-ccd8a22206cb"]
+
+
+== Other implementations
+
+* https://spring.io/guides/topicals/spring-security-architecture/
+* https://www.toptal.com/spring/spring-security-tutorial
+* https://github.com/cleventy/springboilerplate/blob/master/src/main/java/com/cleventy/springboilerplate/util/jwt/JwtTokenUtil.java
+* https://www.bezkoder.com/spring-boot-jwt-authentication/
+* https://stackoverflow.com/questions/76809698/spring-security-method-cannot-decide-pattern-is-mvc-or-not-spring-boot-applicati
+* https://github.com/ali-bouali/spring-boot-3-jwt-security
+

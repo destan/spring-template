@@ -1,0 +1,11 @@
+grispi:
+  jwt:
+    secret: c56222fa88ed489daae109e38d65afd0
+spring:
+  profiles:
+    default: dev
+
+logging:
+  level:
+    org.springframework.security: trace
+    com.grispi: trace
