@@ -1,11 +1,38 @@
-grispi:
+app:
   jwt:
     secret: c56222fa88ed489daae109e38d65afd0
+  logout:
+    invalidate-all: false
+
 spring:
   profiles:
     default: dev
+  datasource:
+    url: jdbc:h2:file:./demodb;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+#      jakarta.persistence.schema-generation.create-source: metadata
+#      jakarta.persistence.schema-generation.scripts.action: create #create
+#      jakarta.persistence.schema-generation.scripts.create-target: reference.sql
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        query:
+          fail_on_pagination_over_collection_fetch: true
+  h2:
+    console:
+      enabled: true
 
 logging:
   level:
+    dev.destan: trace
     org.springframework.security: trace
-    com.grispi: trace
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace # logging hibernate query values (bindings)

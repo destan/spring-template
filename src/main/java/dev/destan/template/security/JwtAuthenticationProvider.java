@@ -34,6 +34,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+		// This method is called from JwtAuthenticationFilter#attemptAuthentication with an unauthenticated JwtAuthentication object
+
 		Assert.isInstanceOf(JwtAuthentication.class, authentication,
 				() -> this.messages.getMessage("JwtAuthenticationProvider.onlySupports",
 						"Only JwtAuthentication is supported"));
@@ -47,7 +50,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 			return jwt;
 		}
 		catch (JWTVerificationException e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage());//FIXME double log?
 			throw new BadCredentialsException("Not a valid token", e);
 		}
 	}

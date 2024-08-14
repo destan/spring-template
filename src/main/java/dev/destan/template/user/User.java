@@ -1,5 +1,7 @@
 package dev.destan.template.user;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import dev.destan.template.user.User.JsonViews.Public;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,10 +23,12 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
+    @JsonView(Public.class)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
     @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     private Long id;
 
+    @JsonView(Public.class)
     private String username;
 
     private String password;
@@ -34,10 +39,18 @@ public class User implements UserDetails {
 
     private boolean expired;
 
-    private ZonedDateTime credentialsSetAt;
+    private LocalDateTime credentialsSetAt;
 
+    @JsonView(Public.class)
     @ManyToMany(fetch = FetchType.EAGER) // We really always want to fetch roles with users
     private Set<Role> roles = new HashSet<>();
+
+    User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.roles.add(role);
+        this.credentialsSetAt = LocalDateTime.now();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,5 +87,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    public static class JsonViews {
+        public static class Public {
+        }
+
+        public static class Admin {
+        }
     }
 }

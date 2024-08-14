@@ -32,15 +32,16 @@ class DemoControllerTest {
 	@LocalServerPort
 	private int port;
 
-	@Value("${grispi.test.valid-jwt}")
+	@Value("${app.test.valid-jwt}")
 	private String validJwt;
 
-	@Value("${grispi.test.expired-jwt}")
+	@Value("${app.test.expired-jwt}")
 	private String expiredJwt;
 
 	@Test
 	@DisplayName("Anonymous user can call public endpoint")
 	void anonymousUserPublicPage() {
+		//xxx
 		final HttpResponse httpResponse = HttpRequest.get(publicPageUrl()).send();
 
 		assertEquals(HttpStatus.HTTP_OK, httpResponse.statusCode());

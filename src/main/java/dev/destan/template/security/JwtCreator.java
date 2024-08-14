@@ -15,18 +15,18 @@ class JwtCreator {
 
     private final Algorithm algorithm;
 
-    JwtCreator(@Value("${grispi.jwt.secret}") byte[] secret) {
+    JwtCreator(@Value("${app.jwt.secret}") byte[] secret) {
         this.algorithm = Algorithm.HMAC256(secret);
     }
 
     JwtWithMetadata create(Authentication authentication) {
         final Instant now = Instant.now();
-        final Instant expiresAt = now.plus(1, ChronoUnit.HOURS);
+        final Instant expiresAt = now.plus(1, ChronoUnit.HOURS);  //FIXME parametric
 
         final String jwt = JWT.create()
                 .withJWTId(UUID.randomUUID().toString())
-                .withIssuer("api")
-                .withAudience("spring-course")
+                .withIssuer("api") //FIXME parametric
+                .withAudience("spring-template") //FIXME parametric and then use tenantId
                 .withSubject(authentication.getName())
                 .withExpiresAt(expiresAt)
                 .withIssuedAt(now)

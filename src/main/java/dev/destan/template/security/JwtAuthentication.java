@@ -30,12 +30,12 @@ public class JwtAuthentication implements Authentication {
 
 	private boolean authenticated;
 
-	private final User user;
+	private final UserFromJwt userFromJwt;
 
 	private JwtAuthentication(String token) throws JWTVerificationException {
 		this.decoded = JWT.decode(token);
 		this.authenticated = false;
-		this.user = new User(decoded.getSubject(), decoded.getClaim("name").asString(), decoded.getClaim("roles").asList(String.class));
+		this.userFromJwt = new UserFromJwt(Long.parseLong(decoded.getSubject()), decoded.getClaim("name").asString(), decoded.getClaim("roles").asList(String.class));
 	}
 
 	/**
@@ -47,6 +47,10 @@ public class JwtAuthentication implements Authentication {
 
 	public String getToken() {
 		return decoded.getToken();
+	}
+
+	public long userId() {
+		return userFromJwt.id();
 	}
 
 	@Override
@@ -77,7 +81,7 @@ public class JwtAuthentication implements Authentication {
 	 */
 	@Override
 	public Object getPrincipal() {
-		return user;
+		return userFromJwt;
 	}
 
 	@Override
@@ -96,8 +100,19 @@ public class JwtAuthentication implements Authentication {
 	}
 
 	void verify(@NonNull JWTVerifier jwtVerifier) throws JWTVerificationException {
-		jwtVerifier.verify(getToken());
+		jwtVerifier.verify(getToken()); // If verification fails this method throws
 		this.authenticated = true;
+	}
+
+	String getJwtId() {
+		return decoded.getId();
+	}
+
+	/**
+	 * @return expiration date as epoch milliseconds
+	 */
+	long expiresAt() {
+		return decoded.getExpiresAtAsInstant().toEpochMilli();
 	}
 
 	private List<SimpleGrantedAuthority> getScopeAuthorities() {

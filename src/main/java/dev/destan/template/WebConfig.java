@@ -9,11 +9,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login.html");
         registry.addViewController("/").setViewName("index.html");
     }
 
-    // https://github.com/spring-projects/spring-framework/issues/28552/
+    // https://github.com/spring-projects/spring-framework/issues/31366
     // @Override
     // public void configurePathMatch(PathMatchConfigurer configurer) {
     //     configurer.setUseTrailingSlashMatch(true);

@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
 	protected JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
 		super(new BearerTokenRequestMatcher(), authenticationManager);
-		this.setAuthenticationSuccessHandler((request, response, authentication) -> { /* noop success handler*/ });
+		this.setAuthenticationSuccessHandler((request, response, authentication) -> { /* noop success handler*/ }); //TODO write JWT to db
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		return parts[1].trim();
 	}
 
-	private static final class BearerTokenRequestMatcher implements RequestMatcher {
+	private static final class BearerTokenRequestMatcher implements RequestMatcher { //TODO restrict to only /api
 
 		@Override
 		public boolean matches(HttpServletRequest request) {

@@ -9,6 +9,6 @@ import java.util.List;
  *
  * @author destan
  */
-public record User(String email, String fullName, List<String> roles) {
+public record UserFromJwt(long id, String username, List<String> roles) {
 
 }

@@ -9,11 +9,14 @@
 * [x] Multiple user roles
 * [ ] Dynamic role-permission association
 * [ ] Database based i18n
+* [ ] Problems JSON
+* [ ] Unique error codes
 * [ ] SMS OTP
 * [ ] Redis integration
 * [ ] Soft delete for users while retaining username uniqueness
 * [ ] TraceId
 * [ ] E-Tag implementation
+* [ ] Required re-login for sensitive operations like `password change` or `account deletion`
 
 === User management
 

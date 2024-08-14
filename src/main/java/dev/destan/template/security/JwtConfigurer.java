@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ class JwtConfigurer extends AbstractHttpConfigurer<JwtConfigurer, HttpSecurity> 
 
 	private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
-	JwtConfigurer(@Value("${grispi.jwt.secret}") byte[] secret) {
+	JwtConfigurer(@Value("${app.jwt.secret}") byte[] secret) {
 		this.jwtAuthenticationProvider = new JwtAuthenticationProvider(secret);
 	}
 
@@ -33,7 +32,8 @@ class JwtConfigurer extends AbstractHttpConfigurer<JwtConfigurer, HttpSecurity> 
 					.authenticationEntryPoint(new JwtAuthenticationEntryPoint())
 					.accessDeniedHandler(new JwtAccessDeniedHandler())
 			)
-			// .csrf(AbstractHttpConfigurer::disable) // If we disable csrf here, it won't work for some reason
-			.sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+			//.csrf(AbstractHttpConfigurer::disable) // If we disable csrf here, it won't work for some reason
+			//.sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // If we set here, it won't work for some reason
+		;
 	}
 }
